@@ -1,0 +1,58 @@
+version: '3.3'
+networks:
+        mongo_network:
+secrets:
+  my_secret_pwd:
+           file: /tmp/senha.txt
+
+
+volumes:
+        mongodb-1:
+        mongodb-2:
+        mongodb-3:
+        mongodb-4:
+services:
+  centos-1:
+    image: "centos:7"
+    command:  /usr/lib/systemd/systemd
+    container_name: centos-1
+    hostname: centos-1
+    privileged: yes
+    volumes:
+     - mongodb-1:/data/mongo
+    networks:
+     - mongo_network
+
+  centos-2:
+    image: "centos:7"
+    command:  /usr/lib/systemd/systemd
+    container_name: centos-2
+    privileged: yes
+    hostname: centos-2
+    volumes:
+     - mongodb-2:/data/mongo
+    networks:
+     - mongo_network
+
+  centos-3:
+    image: "centos:7"
+    command:  /usr/lib/systemd/systemd
+    container_name: centos-3
+    privileged: yes
+    hostname: centos-3
+    volumes:
+     - mongodb-3:/data/mongo
+    networks:
+     - mongo_network
+
+  centos-4:
+    image: "centos:7"
+    command:  /usr/lib/systemd/systemd
+    container_name: centos-4
+    hostname: centos-4
+    privileged: yes
+    volumes:
+     - mongodb-4:/data/mongo
+    networks:
+     - mongo_network
+

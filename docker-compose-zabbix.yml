@@ -1,0 +1,43 @@
+version: '3.3'
+networks:
+        awx_network:
+secrets:
+  my_secret_pwd:
+           file: /tmp/senha.txt
+
+
+volumes:
+        postgres: 
+        mongodb:
+services:
+  postgres:
+    image: "postgres:9.6"
+    container_name: postgres
+    environment:
+      POSTGRES_USER: awx
+      POSTGRES_PASSWORD: awxpass
+      POSTGRES_DB: zabbix
+    volumes:
+     - postgres:/var/lib/postgresql/data/
+    networks:
+     - awx_network
+
+  mongo: 
+    image: mongo:latest
+    container_name: awx_mongo
+    volumes:
+     - mongodb:/data/db
+    networks:
+     - awx_network
+
+  grafana:
+    image: "grafana/grafana:latest"
+    container_name: awx_grafana
+    networks:
+     - awx_network
+  zabbix_server:
+     image: "centos:latest"
+     container_name: "zabbix_server"
+     command:  /usr/lib/systemd/systemd
+     networks:
+             - awx_network

@@ -1,0 +1,33 @@
+version: '3'
+services:
+  logstash:
+#   image: "docker.elastic.co/logstash/logstash:6.1.1"
+    image: "logstash:vv_prd"
+    privileged: true
+    networks:
+      - esnet
+
+   
+  mongo:
+     image: "mongo:latest"
+     #     command: ['/usr/lib/systemd/systemd']
+     networks:
+      - esnet
+
+
+  elastic:
+       image: "docker.elastic.co/elasticsearch/elasticsearch:6.1.1"
+       environment:
+            discovery.type: single-node
+
+       volumes:
+         - esdata1:/usr/share/elasticsearch/data
+       networks:
+         - esnet
+
+volumes:
+    esdata1:
+       driver: local
+networks:
+    esnet:
+
