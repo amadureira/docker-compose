@@ -5,7 +5,7 @@ secrets:
   my_secret_pwd:
            file: /tmp/senha.txt
 
-
+##only comment
 #configs:
 #        krb5:
 #                external: true
